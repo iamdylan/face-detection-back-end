@@ -12,11 +12,8 @@ const image = require('./controllers/image');
 const db = knex({
     client: 'pg',
     connection: {
-        host     : process.env.RDS_HOSTNAME,
-        user     : process.env.RDS_USERNAME,
-        password : process.env.RDS_PASSWORD,
-        port     : process.env.RDS_PORT,
-        database : process.env.RDS_DB_NAME
+	connectionString: process.env.RDS_CONNECTION_URL,
+	ssl: true
     }
 });
 
@@ -25,7 +22,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/', (req,res) => {res.send(database.users);})
+app.get('/', (req,res) => {res.send(myDatabase.users);})
 app.post('/signin', (req, res) => {signin.handleSignIn(req, res, db, bcrypt)});
 app.post('/register', (req, res) => {register.handleRegister(req, res, db, bcrypt)});
 app.get('/profile/:id', (req, res) => {profile.handleProfile(req, res, db)});
@@ -33,6 +30,7 @@ app.put('/image', (req, res) => {image.handleImage(req, res, db)});
 app.post('/imageurl', (req, res) => {image.handleApiCall(req, res,)});
 
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log('app is running on port ${process.env.PORT}');
+
+app.listen(8080, () => {
+    console.log('app is running on port 8080');
 })
