@@ -9,4 +9,4 @@ This is the back-end for the Face-Detection App. This compliments the front end 
 - Node.js
 - Express
 - PostgresSQL
-- Heroku CLI
+- Amazon Web Services
